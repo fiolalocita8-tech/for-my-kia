@@ -1,240 +1,319 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>happy birthday my gorgeous — letter</title>
-
-<!-- fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600&family=Playfair+Display+SC:wght@600&display=swap" rel="stylesheet">
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday My Gorgeous 🌟</title>
 <style>
-  :root{
-    --bg:#061021;
-    --card:#0b1a2a;
-    --muted:rgba(230,238,248,0.6);
-    --accent:rgba(173,192,255,0.06);
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html,body{
-    height:100%;
-    background:linear-gradient(180deg,var(--bg),#02101a);
-    font-family:'Nunito',system-ui;
-  }
+body {
+  margin:0;
+  font-family:'Nunito',sans-serif;
+  background: linear-gradient(180deg,#061021,#02101a);
+  color:#eaf4ff;
+  overflow:hidden;
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+  padding-top:20px;
+}
 
-  .wrap{
-    min-height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:28px;
-  }
-  .card{
-    width:100%;max-width:920px;
-    background:linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.015));
-    border-radius:18px;
-    padding:32px;
-    position:relative;
-    overflow:hidden;
-    box-shadow:0 12px 40px rgba(2,6,12,0.7);
-  }
+.stars, .moon {
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  pointer-events:none;
+  z-index:0;
+}
 
-  .head{display:flex;align-items:flex-start;gap:14px;margin-bottom:18px}
-  .title{
-    font-family:'Playfair Display SC',serif;
-    color:#eaf4ff;
-    font-size:22px;
-    font-weight:600;
-    letter-spacing:.4px;
-  }
-  .small{font-size:13px;color:var(--muted)}
-  .sub{
-    margin-left:auto;
-    color:var(--muted);
-    font-size:12px;
-  }
+.moon{
+  font-size:40px;
+  color:#fffacd;
+  text-shadow:0 0 12px #fffacd80, 0 0 24px #fffacd40;
+  position:fixed;
+  top:10%;
+  right:10%;
+}
 
-  .media-area{
-    width:100%;
-    height:420px;
-    background:rgba(255,255,255,0.02);
-    border-radius:14px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    overflow:hidden;
-    position:relative;
-    margin-bottom:22px;
-  }
-  .media-area .media-item{
-    position:absolute;
-    opacity:0;
-    transform:scale(1.03);
-    transition:opacity .9s ease,transform .9s cubic-bezier(.2,.9,.2,1);
-  }
-  .media-area .media-item.show{
-    opacity:1;
-    transform:none;
-  }
-  .media-item img,.media-item video{
-    max-width:78%;
-    max-height:88%;
-    border-radius:16px;
-    box-shadow:0 14px 34px rgba(0,0,0,0.6);
-    object-fit:cover;
-  }
+.card{
+  position:relative;
+  z-index:1;
+  max-width:920px;
+  padding:32px;
+  max-height:90vh;
+  overflow-y:auto;
+  background:linear-gradient(180deg,rgba(255,255,255,0.03),rgba(255,255,255,0.015));
+  border-radius:18px;
+  box-shadow:0 12px 40px rgba(2,6,12,0.7);
+  text-align:center;
+  -webkit-overflow-scrolling: touch;
+  outline:none;
+}
 
-  .letter{
-    color:#eaf4ff;
-    line-height:1.9;
-    font-size:18px;
-    font-weight:400;
-    font-family:'Nunito',sans-serif;
-    letter-spacing:.3px;
-  }
-  .para{
-    opacity:0;
-    transform:translateY(18px);
-    transition:opacity .75s ease, transform .75s ease;
-    margin-bottom:22px;
-  }
-  .para.show{
-    opacity:1;
-    transform:none;
-  }
+h1{
+  font-family:'Times New Roman', serif;
+  font-size:2rem;
+  margin-bottom:20px;
+}
 
-  .controls{display:flex;gap:10px;align-items:center;margin-bottom:14px}
-  .btn{
-    padding:8px 12px;
-    border-radius:10px;
-    background:transparent;
-    border:1px solid rgba(255,255,255,0.05);
-    color:var(--muted);
-    cursor:pointer;
-    font-size:13px;
-  }
+.media-item img{
+  width:60%;
+  max-width:500px;
+  height:auto;
+  border-radius:16px;
+  box-shadow:0 14px 34px rgba(0,0,0,0.6);
+  margin-bottom:20px;
+}
 
-  .stars{position:absolute;inset:0;pointer-events:none;z-index:0}
-  .star{
-    position:absolute;width:2px;height:2px;
-    background:#fff;border-radius:50%;
-    opacity:.85;filter:blur(.2px);
-  }
-  .shoot{
-    position:absolute;width:3px;height:3px;
-    background:linear-gradient(90deg,#fff6,#fff);
-    filter:blur(.6px);
-    transform:rotate(-25deg);
-    border-radius:2px;
-  }
+.letter{
+  line-height:1.9;
+  font-size:18px;
+  font-weight:400;
+  text-align:left;
+  max-width:700px;
+  margin:0 auto;
+}
 
-  @media(max-width:760px){
-    .media-area{height:320px}
-    .letter{font-size:16px}
-  }
+.para{
+  opacity:0;
+  transform:translateY(18px);
+  transition:opacity 1.2s ease-in-out, transform 1.2s ease-in-out;
+  margin-bottom:16px;
+}
+
+.para.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+.btn{
+  padding:8px 12px;
+  border-radius:10px;
+  background:transparent;
+  border:1px solid rgba(255,255,255,0.05);
+  color:rgba(230,238,248,0.6);
+  cursor:pointer;
+  font-size:13px;
+  margin-left:10px;
+}
+
+.hidden{display:none;}
+.next-text{
+  margin-top:20px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.star{
+  position:absolute;
+  width:2px;
+  height:2px;
+  background:#fff;
+  border-radius:50%;
+  opacity:.85;
+  filter:blur(.3px);
+  animation:blink 2s infinite alternate;
+}
+
+.star-emoji{
+  position:absolute;
+  font-size:12px;
+  color:#fff;
+  opacity:0.8;
+  animation:blink 2s infinite alternate;
+}
+
+.shoot{
+  position:absolute;
+  width:3px;
+  height:3px;
+  background:linear-gradient(90deg,#fff6,#fff);
+  filter:blur(.6px);
+  transform:rotate(-25deg);
+  border-radius:2px;
+}
+
+@keyframes blink{
+  0%{opacity:0.1;}
+  50%{opacity:1;}
+  100%{opacity:0.1;}
+}
+
+.card:focus, 
+.card:active, 
+.card *:focus {
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media(max-width:760px){
+  h1{font-size:1.6rem;}
+  .letter{font-size:16px;}
+  .media-item img{width:80%; max-width:300px;}
+}
+
+/* Slide2 video portrait */
+#slide2 .media-area {
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:90vh;
+}
+#slide2 video {
+  width:auto;
+  max-width:100%;
+  height:100%;
+  aspect-ratio:9/16;
+  object-fit:cover;
+  border-radius:16px;
+}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <div class="card" id="card">
-    <div class="stars" id="stars"></div>
 
-    <div class="head">
-      <div>
-        <div class="title">happy birthday</div>
-        <div class="small">letter you'll never send • midnight</div>
+<div class="stars" id="stars"></div>
+<div class="moon">🌙</div>
+
+<div class="card" tabindex="0">
+
+  <!-- SLIDE 1 -->
+  <div id="slide1">
+    <h1>Happy Birthday My Gorgeous 🌟</h1>
+    <div class="media-area">
+      <div class="media-item show">
+        <img src="1761482834518.jpg" alt="Foto">
       </div>
-      <div class="sub">tap untuk lanjut pelan</div>
     </div>
 
-    <div class="media-area" id="mediaArea">
-      <!-- foto/video bisa ditambah disini -->
-    </div>
-
-    <div class="controls">
-      <audio id="audioPlayer" style="width:100%" controls>
-        <source src="Tergelincir di Antara Jari-Jariku (1).mp3"type="audio/mpeg">
-        Your browser does not support the audio element.
-      </audio>
-      <button class="btn" id="muteBtn">mute</button>
-    </div>
+    <audio id="audioPlayer" controls style="width:100%; margin-top:20px;">
+      <source src="Slipping Through My Fingers (1).mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+    <button class="btn" id="muteBtn">mute</button>
 
     <article class="letter" id="letter"></article>
 
+    <div class="next-text" id="nextSlideBtn">next, kia tap sekali ya</div>
   </div>
+
+  <!-- SLIDE 2 -->
+  <div id="slide2" class="hidden">
+    <div class="media-area">
+      <div class="media-item show">
+        <video controls>
+          <source src="lv_0_20251026194138.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+    <div class="next-text" id="backSlideBtn">tap sini untuk balik ke slide awal</div>
+  </div>
+
 </div>
 
 <script>
-const letterText = `aku nulis ini dengan tangan yang gemetar pelan, bukan karena marah, tapi karena capek yang lama dikumpulin sampai akhirnya bunyi kecil itu jadi keras di kepala. aku selalu berusaha ngerti, selalu berusaha menahan ego—karena kamu pernah bilang kamu butuh ruang, dan aku ngikut. aku ngga pernah berharap balasan yang sama, cuma pengen rasa itu dihargai sesekali, bukan dipandang enteng.
+// Paragraf panjang asli yang kamu buat
+const letterText = `happy birthday.
 
-aku juga bukannya bener terus. aku salah, aku pernah memilih yang membuatmu kecewa. waktu itu aku butuh seseorang yang ada, dan dia hadir. aku gak minta kamu setuju—aku cuma minta kamu dengar aku saat aku jelasin kenapa aku ambil pilihan itu, bukan langsung menutup hati dan bilang 'ngga'.
+(tap sekali ya, terus scroll kebawah, dibaca pelan biar lagunya pas)
 
-selama tiga tahun aku belajar sabar. aku belajar meringankan amarah sendiri, menyiapkan kata yang lembut, memilih buat diem daripada nambah luka. tapi diam itu ngga selamanya kuat. ada batas yang pelan-pelan ngerem. aku capek, bukan karena kamu ga berharga, tapi karena aku udah kasih lebih banyak daripada yang aku punya.
+aku ngga tau harus mulai dari mana, tapi ya, selamat ulang tahun ya. semoga kamu bahagia, bener-bener bahagia.
 
-aku tetap sayang. dan sayang itu bukan alasan buat terus ditarik tanpa henti. aku pengen kamu tumbuh — buat bisa nerima masukan, buat bisa lebih peka, karena banyak orang yang ngga keliatan juga terluka oleh ucapanmu. kalo ada yang baik mau ngasih saran, coba denger dulu. bukan berarti semuanya salah, cuma mereka peduli.
+jujur, aku nulis ini bukan cuma buat ngucapin, tapi juga buat ngomong apa yang selama ini aku pendem. tiga tahun bukan waktu yang sebentar, dan selama itu aku selalu coba nurunin ego aku biar kita tetep bisa temenan. aku berusaha ngerti kamu, ngikutin apa yang kamu mau, ngelakuin hal-hal yang bikin kamu seneng. tapi kadang, aku juga cape. aku juga sakit hati, walau aku ngga pernah nunjukin. mungkin kamu ngga sadar, tapi cara kamu ngomong, atau cara kamu bersikap kadang nyakitin. aku diem bukan karena ngga peduli, tapi karena aku ngga mau nambah masalah aja.
 
-aku nggak bilang kita harus putus temen. aku cuma bilang: aku perlu istirahat. kasih aku napas, biar aku bisa datang lagi dengan hati yang lebih ringan. kalaupun nanti jarak ngebuat kita ngga sedekat dulu, aku tetap doain kamu. aku masih berharap kamu bahagia. tapi aku juga berharap kamu ngerti — aku pernah tulus jagain kamu, dan aku juga manusia yang perlu disayang balik.
+aku tau aku juga salah, apalagi soal aku balik sama mantan aku. aku tau kamu ngga suka dia, tapi waktu itu cuma dia yang ada buat aku. pas aku bener-bener butuh seseorang, yang lain ngga bisa bantu. aku ngga nyalahin kamu karena ngga suka, cuma aku pengen kamu ngerti aja alasannya, bukan langsung ngejudge.
 
-happy birthday. terima kasih untuk semua yang pernah kita bagi.`.toLowerCase();
+aku seneng kok bisa temenan sama kamu. banyak hal yang aku pelajarin, terutama soal sabar dan ngerti orang lain. tapi aku juga pengen kamu berubah pelan-pelan, jadi lebih lembut ke orang, jadi lebih bisa nerima masukan tanpa langsung nunjukin ngga suka. kadang orang cuma pengen didenger dulu, bukan dibantah.
+
+aku masih sayang kok sama kamu, tapi aku juga punya batas. aku cape kalau harus terus ngerasa kayak aku yang berjuang sendiri buat temenan. aku udah kasih energi terbaik aku buat hubungan ini, sisanya terserah kamu mau gimana.
+
+walau nanti kita ngga sedeket dulu, aku tetep peduli. aku tetep bakal khawatir, masih mikirin kamu dari jauh. aku cuma pengen kamu ngerti, aku ngomong gini bukan buat nyalahin, tapi karena aku udah nyimpen ini terlalu lama.
+
+sekali lagi, happy birthday ya. semoga kamu bisa jadi versi terbaik dari diri kamu, yang lebih peka, lebih ngerti perasaan orang, dan lebih menghargai mereka yang masih mau bertahan meski sering disakitin.
+
+dan kalau suatu hari kamu baca ini lagi, entah kita masih deket atau udah jadi asing, aku cuma mau kamu tau… aku pernah tulus banget jagain kamu, walau akhirnya aku yang harus belajar buat ngelepasin.`;
 
 let paras = letterText.split(/\n{2,}|\r\n{2,}/).filter(Boolean);
 const letterEl = document.getElementById('letter');
-paras.forEach((p,i)=>{
-  let node=document.createElement('div');
+paras.forEach(p=>{
+  let node = document.createElement('div');
   node.className='para';
-  node.innerText=p.trim();
+  node.innerText = p.trim();
   letterEl.appendChild(node);
 });
 
-const mediaItems=[...document.querySelectorAll('.media-item')];
-const parasEls=[...document.querySelectorAll('.para')];
-let current=-1;
+const parasEls = [...document.querySelectorAll('.para')];
+let current=0;
+if(parasEls[0]) parasEls[0].classList.add('show');
+
 function revealNext(){
-  if(current<parasEls.length-1){
+  if(current < parasEls.length - 1){
     current++;
     parasEls[current].classList.add('show');
-    mediaItems.forEach((m,i)=>m.classList.remove('show'));
-    if(mediaItems[current]) mediaItems[current].classList.add('show');
   }
 }
-setTimeout(()=>revealNext(),500);
 
-document.getElementById('card').addEventListener('click',e=>{
-  if(e.target.closest('audio')||e.target.closest('.btn'))return;
+document.querySelector('.card').addEventListener('click', e=>{
+  if(e.target.closest('audio') || e.target.closest('video') || e.target.closest('.btn')) return;
   revealNext();
 });
 
-const audioPlayer=document.getElementById('audioPlayer');
-const muteBtn=document.getElementById('muteBtn');
-muteBtn.addEventListener('click',()=>{
-  audioPlayer.muted=!audioPlayer.muted;
-  muteBtn.innerText=audioPlayer.muted?'unmute':'mute';
+const audioPlayer = document.getElementById('audioPlayer');
+const muteBtn = document.getElementById('muteBtn');
+muteBtn.addEventListener('click', ()=>{
+  audioPlayer.muted = !audioPlayer.muted;
+  muteBtn.innerText = audioPlayer.muted ? 'unmute' : 'mute';
 });
 
-const starContainer=document.getElementById('stars');
+const slide1 = document.getElementById('slide1');
+const slide2 = document.getElementById('slide2');
+document.getElementById('nextSlideBtn').addEventListener('click',()=>{
+  slide1.classList.add('hidden');
+  slide2.classList.remove('hidden');
+});
+document.getElementById('backSlideBtn').addEventListener('click',()=>{
+  slide2.classList.add('hidden');
+  slide1.classList.remove('hidden');
+});
+
+const starContainer = document.getElementById('stars');
 for(let i=0;i<80;i++){
-  const s=document.createElement('div');
+  const s = document.createElement('div');
   s.className='star';
-  s.style.left=(Math.random()*100)+'%';
-  s.style.top=(Math.random()*100)+'%';
-  s.style.opacity=(0.15+Math.random()*0.8);
+  s.style.left = Math.random()*100 + '%';
+  s.style.top = Math.random()*100 + '%';
+  const size = 1+Math.random()*2;
+  s.style.width = size + 'px';
+  s.style.height = size + 'px';
+  s.style.opacity = 0.2 + Math.random()*0.8;
   starContainer.appendChild(s);
 }
-function shoot(){
-  const sh=document.createElement('div');
-  sh.className='shoot';
-  sh.style.left=(10+Math.random()*80)+'%';
-  sh.style.top=(20+Math.random()*60)+'%';
-  starContainer.appendChild(sh);
-  const dur=1100+Math.random()*900;
-  sh.animate([
-    {transform:'translateX(0) translateY(0) scale(1)',opacity:1},
-    {transform:'translateX(450px) translateY(-220px) scale(0.25)',opacity:0}
-  ],{duration:dur,easing:'cubic-bezier(.2,.8,.2,1)'});
-  setTimeout(()=>sh.remove(),dur+80);
-}
-setInterval(shoot,2600+Math.random()*2200);
-</script>
 
+for(let i=0;i<15;i++){
+  const s = document.createElement('div');
+  s.className='star-emoji';
+  s.style.left=Math.random()*100+'%';
+  s.style.top=Math.random()*100+'%';
+  starContainer.appendChild(s);
+}
+
+function meteor(){
+  const m = document.createElement('div');
+  m.className = 'shoot';
+  m.style.top = Math.random() * 50 + '%';
+  m.style.left = Math.random() * 80 + 10 + '%';
+  starContainer.appendChild(m);
+  const dur = 1200 + Math.random()*1000;
+  m.animate([
+    {transform:'translateX(0) translateY(0) scale(1)',opacity:1},
+    {transform:'translateX(400px) translateY(200px) scale(0.2)',opacity:0}
+  ], {duration: dur, easing:'cubic-bezier(.2,.8,.2,1)'});
+  setTimeout(()=> m.remove(), dur+50);
+}
+setInterval(meteor, 2000 + Math.random()*2000);
+
+</script>
 </body>
 </html>
+
