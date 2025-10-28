@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Happy Birthday My Gorgeous 🌟</title>
+
 <style>
 body {
   margin:0;
@@ -98,40 +99,54 @@ h1{
   margin-left:10px;
 }
 
-.hidden{display:none;}
 .next-text{
-  margin-top:20px;
+  margin-top:24px;
   font-weight:bold;
   cursor:pointer;
+  position:sticky;
+  bottom:18px;
+  padding:10px 18px;
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.06);
+  border-radius:14px;
+  backdrop-filter:blur(8px);
+  box-shadow:0 0 16px rgba(255,255,255,0.08);
+  transition:all .4s ease;
+  user-select:none;
 }
 
+.next-text:active,
+.next-text:hover{
+  background:rgba(255,255,255,0.1);
+  box-shadow:0 0 26px rgba(255,255,255,0.24);
+  transform:translateY(-3px);
+}
+
+.hidden{
+  display:none;
+  opacity:0;
+  transition:opacity .6s ease;
+}
+
+.slide-active{
+  display:block;
+  opacity:1;
+}
+
+/* Stars */
 .star{
   position:absolute;
-  width:2px;
-  height:2px;
   background:#fff;
   border-radius:50%;
-  opacity:.85;
-  filter:blur(.3px);
   animation:blink 2s infinite alternate;
 }
 
 .star-emoji{
   position:absolute;
-  font-size:12px;
-  color:#fff;
-  opacity:0.8;
+  font-size:13px;
+  color:#ffffffcc;
+  opacity:0.55;
   animation:blink 2s infinite alternate;
-}
-
-.shoot{
-  position:absolute;
-  width:3px;
-  height:3px;
-  background:linear-gradient(90deg,#fff6,#fff);
-  filter:blur(.6px);
-  transform:rotate(-25deg);
-  border-radius:2px;
 }
 
 @keyframes blink{
@@ -140,26 +155,28 @@ h1{
   100%{opacity:0.1;}
 }
 
-.card:focus, 
-.card:active, 
-.card *:focus {
-  outline: none;
-  -webkit-tap-highlight-color: transparent;
-}
-
 @media(max-width:760px){
   h1{font-size:1.6rem;}
   .letter{font-size:16px;}
   .media-item img{width:80%; max-width:300px;}
 }
 
-/* Slide2 video portrait */
+@media(max-height:600px){
+  .next-text{
+    bottom:8px;
+    font-size:14px;
+    padding:6px 10px;
+  }
+}
+
+/* slide2 portrait video */
 #slide2 .media-area {
   display:flex;
   justify-content:center;
   align-items:center;
   height:90vh;
 }
+
 #slide2 video {
   width:auto;
   max-width:100%;
@@ -170,6 +187,7 @@ h1{
 }
 </style>
 </head>
+
 <body>
 
 <div class="stars" id="stars"></div>
@@ -178,8 +196,9 @@ h1{
 <div class="card" tabindex="0">
 
   <!-- SLIDE 1 -->
-  <div id="slide1">
+  <div id="slide1" class="slide-active">
     <h1>Happy Birthday My Gorgeous 🌟</h1>
+
     <div class="media-area">
       <div class="media-item show">
         <img src="1761482834518.jpg" alt="Foto">
@@ -213,7 +232,6 @@ h1{
 </div>
 
 <script>
-// Paragraf panjang asli yang kamu buat
 const letterText = `happy birthday.
 
 (tap sekali ya, terus scroll kebawah, dibaca pelan biar lagunya pas)
@@ -247,16 +265,17 @@ const parasEls = [...document.querySelectorAll('.para')];
 let current=0;
 if(parasEls[0]) parasEls[0].classList.add('show');
 
-function revealNext(){
+function smoothRevealNext(){
   if(current < parasEls.length - 1){
     current++;
     parasEls[current].classList.add('show');
+    parasEls[current].scrollIntoView({behavior:'smooth', block:'center'});
   }
 }
 
 document.querySelector('.card').addEventListener('click', e=>{
   if(e.target.closest('audio') || e.target.closest('video') || e.target.closest('.btn')) return;
-  revealNext();
+  smoothRevealNext();
 });
 
 const audioPlayer = document.getElementById('audioPlayer');
@@ -266,17 +285,27 @@ muteBtn.addEventListener('click', ()=>{
   muteBtn.innerText = audioPlayer.muted ? 'unmute' : 'mute';
 });
 
+/* Slide controls */
 const slide1 = document.getElementById('slide1');
 const slide2 = document.getElementById('slide2');
+
 document.getElementById('nextSlideBtn').addEventListener('click',()=>{
+  audioPlayer.pause();
+  slide1.classList.remove('slide-active');
   slide1.classList.add('hidden');
   slide2.classList.remove('hidden');
-});
-document.getElementById('backSlideBtn').addEventListener('click',()=>{
-  slide2.classList.add('hidden');
-  slide1.classList.remove('hidden');
+  setTimeout(()=> slide2.classList.add('slide-active'),20);
 });
 
+document.getElementById('backSlideBtn').addEventListener('click',()=>{
+  slide2.classList.remove('slide-active');
+  slide2.classList.add('hidden');
+  slide1.classList.remove('hidden');
+  setTimeout(()=> slide1.classList.add('slide-active'),20);
+  audioPlayer.play();
+});
+
+/* Stars */
 const starContainer = document.getElementById('stars');
 for(let i=0;i<80;i++){
   const s = document.createElement('div');
@@ -286,33 +315,19 @@ for(let i=0;i<80;i++){
   const size = 1+Math.random()*2;
   s.style.width = size + 'px';
   s.style.height = size + 'px';
-  s.style.opacity = 0.2 + Math.random()*0.8;
   starContainer.appendChild(s);
 }
 
-for(let i=0;i<15;i++){
+const starEmojis = ['✦','✧','✩'];
+for(let i=0;i<22;i++){
   const s = document.createElement('div');
   s.className='star-emoji';
+  s.innerText = starEmojis[Math.floor(Math.random()*starEmojis.length)];
   s.style.left=Math.random()*100+'%';
   s.style.top=Math.random()*100+'%';
   starContainer.appendChild(s);
 }
-
-function meteor(){
-  const m = document.createElement('div');
-  m.className = 'shoot';
-  m.style.top = Math.random() * 50 + '%';
-  m.style.left = Math.random() * 80 + 10 + '%';
-  starContainer.appendChild(m);
-  const dur = 1200 + Math.random()*1000;
-  m.animate([
-    {transform:'translateX(0) translateY(0) scale(1)',opacity:1},
-    {transform:'translateX(400px) translateY(200px) scale(0.2)',opacity:0}
-  ], {duration: dur, easing:'cubic-bezier(.2,.8,.2,1)'});
-  setTimeout(()=> m.remove(), dur+50);
-}
-setInterval(meteor, 2000 + Math.random()*2000);
-
 </script>
+
 </body>
 </html>
